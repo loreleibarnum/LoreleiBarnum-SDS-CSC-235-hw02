@@ -3,6 +3,12 @@ iframe {
   margin: 0 auto;
 }
 
+a:hover {
+	background-color:yellow!important;
+	color: blue;
+	font-weight: bold;
+}
+
 body {
   font-family: "arial";
 }
