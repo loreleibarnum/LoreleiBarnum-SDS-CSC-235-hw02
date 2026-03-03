@@ -8,11 +8,35 @@
 
 </head>
 <body>
-<iframe src="myplot.html" width="800" height="600"></iframe>
+
     <div id="landing">
-        <h1 class="important">[Introduction to Data]</h1>
+        <h1 class="important">An Analysis of Crime Data from the LAPD</h1>
+    </div>
+    <div id="landing">
+        <h2 class="important">Introduction to Dataset</h2>
+            <p>In this article, we will be using a dataset provided by the Los Angeles Police Department (LAPD). The dataset
+        includes crime incidents in Los Angeles starting in the year 2020. The data collection ends at approximately March
+        7th, 2024 when the LAPD transitions to a new records management system compliant with FBI standards. Some notable
+        variables that will be used in our analysis include victim's biological sex, victim's age, area of crime, crimes
+        involving theft, number of crimes reported, and time the crime occurred. Overall the dataset includes a little over
+        1,000,000 crime reports. It is important to note that the data set is comes from data that is originally handwritten
+        by the police officers who are taking the crime report. This makes the data susceptible to bias in the reporting by
+        the police officers themselves and potential errors from the transition of the handwritten data to computerized
+        dataset. If you want to use this dateset or simply learn more then go to the
+         <a href="https://data.lacity.org/Public-Safety/Crime-Data-from-2020-to-Present/2nrs-mtv8/about_data">Los Angeles
+             Open Data Website.</a></p>
     </div>
 
+    <div id="landing">
+        <h2 class="important">Exploratory Data Analysis</h2>
+            <h3 class="important">Victim's Biological Sex</h3>
+                <p>This dataset has three categories for the biological sex of the victims: female, male, and unknown.
+                Female sex accounts for approximately 42%, the male sex approximately 47%, and the unknown sex
+                approximately 11%.</p>
+                    <iframe src="VictimSexBar.html" width="300" height="300" title="Victioms's Bio-sex"></iframe>
+    </div>
+    <p></p>
+    <iframe src="AreaOfCrime.html" width="300" height="300" title="Crime be Area in LA"></iframe>
     <div id="frame">
         <svg width="600" height="600">
             <g>
