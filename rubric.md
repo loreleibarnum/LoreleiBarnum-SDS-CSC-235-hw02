@@ -10,7 +10,7 @@ Listed below are various aspects of the assignment. When you turn in your work, 
 
 ### Phase 1:
 
-__ 3 pts: Summary statistics for at least 2 quantitative variables, 2 ordinal variables, and 2 categorical variables
+YES 3 pts: Summary statistics for at least 2 quantitative variables, 2 ordinal variables, and 2 categorical variables
 
 __ 3 pts: Distribution / Frequency visualizations
 
@@ -22,19 +22,19 @@ __ 3 pts: Three testable hypotheses about the subject matter, informed by your E
 
 __ 4 pts: Website is well formatted with appropriate titles, headings, page divisions, etc.. 
 
-__ 1 pts: Website provides a synopsis of the raw data with a link to the source, brief overview of what the data captures, and brief discussion of biases present in the data 
+YES 1 pts: Website provides a synopsis of the raw data with a link to the source, brief overview of what the data captures, and brief discussion of biases present in the data
 
 __ 1 pts: Website includes clear, proofread, succinct writing
 
-__ 1 pt: Website highlights at least one HTML element in response to hovering over it
+YES 1 pt: Website highlights at least one HTML element in response to hovering over it
 
 __ 1 pt: website modifies at least one HTML element repeatedly in response to a button click
 
 ### General:
 
-__ 1 pt: CSS is in an external file, not coded directly in the `.html` file
+YES 1 pt: CSS is in an external file, not coded directly in the `.html` file
 
-__ 1 pt: JS is in an external file, not coded directly in the `.html` file
+YES 1 pt: JS is in an external file, not coded directly in the `.html` file
 
 __ 1 pt: Completed `rubric.md` included with submission
 
@@ -42,4 +42,4 @@ __ 1 pt: Browser compiles code with no errors
 
 __ 1 pt: Interactive components execute fully and consistently with no errors
 
-__ Changelog: Completed `changelog.md` included with submission
+NO Changelog: Completed `changelog.md` included with submission
