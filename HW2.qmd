@@ -1,0 +1,272 @@
+---
+title: "HW 2 SDS235"
+author: Lorelei Barnum
+format: html
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+library(readr)
+library(plotly)
+## Guide to plotly: https://plotly.com/ggplot2/getting-started/
+library(htmlwidgets)
+## How to Save Widget: https://www.rdocumentation.org/packages/htmlwidgets/versions/1.6.4/topics/saveWidget
+library(scales)
+crime <- read_csv("~/Documents/SDS 235/Crime_Data_from_2020_to_Present.csv")
+## Data: Crime Data from 2020 to Present Public Safety [https://data.lacity.org/Public-Safety/Crime-Data-from-2020-to-Present/2nrs-mtv8/about_data]
+```
+
+```{r}
+## Categorical 1
+
+crime_biosex <- crime |>
+  filter(`Vict Sex` == "F" |
+         `Vict Sex` == "M" |
+         `Vict Sex` == "X")
+
+crime_biosex$`Vict Sex` <- recode(crime_biosex$`Vict Sex`, F = "Female", M = "Male", X = "Unknown")
+
+plot1 <- ggplot(crime_biosex,
+       aes(x=`Vict Sex`)) +
+       geom_bar(fill = "darkseagreen4") +
+  labs(x = "Victim's Sex", y = "Number of Crime Reports", title = "Number of Crime Reports by Victim's Sex") +
+  scale_y_continuous(labels = label_comma()) + ## This makes label not scientific notation
+  theme_minimal()
+
+plot1html <- ggplotly(plot1)
+
+saveWidget(plot1html, file = "VictimBioSexBarPlot1.html")
+
+## Summary Stats
+prop.table(table(crime_biosex$`Vict Sex`, useNA = "ifany"))
+    ## Female: 0.4168410    approx 42% Female
+    ## Male: 0.4695001      approx 47% Male
+    ## Unknown: 0.1136589   approx 11% Unknown
+```
+
+```{r}
+## Categorical 2
+
+plot2 <- ggplot(crime,
+       aes(x=`AREA NAME`)) +
+       geom_bar(fill="darkorchid4") +
+  labs(x="Area of Crime", y = "Number of Crime Reports", title = "Number of Crime Reports by Area in Los Angeles") +
+  scale_y_continuous(labels = label_comma()) +
+  theme_minimal() +
+  coord_flip()
+
+plot2html <- ggplotly(plot2)
+
+saveWidget(plot2html, file = "AreaOfCrimeBarPlot1.html")
+
+## Summary Stats
+prop.table(table(crime$`AREA NAME`, useNA = "ifany"))
+    ## 77th Street: 0.06145130    approx 6% 77th St
+    ## Central: 0.06932400        approx 7% Central
+    ## etc.
+```
+
+```{r}
+## Numerical 1
+crime_age <- crime |>
+  filter(`Vict Age` > 0 &
+         `Vict Age` < 120)
+
+plot3 <- ggplot(crime_age,
+       aes(x=`Vict Age`)) +
+       geom_density(fill = "lightblue") +
+  scale_y_continuous(labels = label_comma()) +
+  labs(x="Victim's Age", y = "Number of Crime Reports", title="Number of Crime Reports by Victim's Age") +
+  xlim(0, 100) +
+  theme_minimal()
+
+plot3html <- ggplotly(plot3)
+
+saveWidget(plot3html, file = "VictimsAgeDensityPlot1.html")
+
+## Summary Stats
+
+summary(crime_age$`Vict Age`)
+## Min:            2.00
+## 1st Quartile:  28.00
+## Median:        37.00
+## Mean:          39.51
+## 3rd Quartile:  50.00
+## Max:           120.00
+```
+
+```{r}
+## Numerical 2
+ 
+crime$`TIME OCC` <- as.numeric(as.character(crime$`TIME OCC`))  
+ 
+plot8 <- ggplot(crime,
+        aes(x=`TIME OCC`)) +
+        geom_histogram(binwidth = 100, fill = "black", color = "pink") +
+   labs(x="Time of Occurrence", y = "Number of Crime Reports", title = "Number of Crime Reports by Time of Occurrence") +
+   theme_minimal()
+
+plot8html <- ggplotly(plot8)
+
+saveWidget(plot8html, file = "TimeofCrimePlot1.html")
+
+## Summary Stats
+
+summary(crime$`TIME OCC`)
+## Min:             1 or 12:01AM
+## 1st Quartile:  900 or 09:00AM
+## Median:       1420 or 02:20PM
+## Mean:         1340 or 01:40PM
+## 3rd Quartile: 1900 or 07:00PM
+## Max:          2359 or 11:59PM
+```
+
+```{r}
+## Ordinal 1
+
+crime_long <- crime |>
+  pivot_longer(
+    cols = c(`Crm Cd 1`, `Crm Cd 2`, `Crm Cd 3`, `Crm Cd 4`), 
+    names_to = "CrmCd", 
+    values_to = "Crm CD Val"
+  ) 
+
+crime_long_filtered <- crime_long |>
+  filter(!is.na(`Crm CD Val`)) #|>
+  #filter(CrmCd != "Crm Cd 1")
+
+crime_long_filtered$CrmCd <- recode(crime_long_filtered$CrmCd, "Crm Cd 1" = "Crime Committed 1", "Crm Cd 2" = "Crime Committed 2", "Crm Cd 3" = "Crime Committed 3")
+
+plot4 <- ggplot(crime_long_filtered,
+       aes(x = `CrmCd`)) +
+       geom_bar() +
+  labs(x = "Presence of a 1st, 2nd, and 3rd Crime", y = "Number of Crime Reports", title = "Number of Crime Reports by Presence of 1st, 2nd, and 3rd Crime in Report")  +
+  scale_y_continuous(labels = label_comma()) +
+  theme_minimal()
+
+
+plot4html <- ggplotly(plot4)
+
+saveWidget(plot4html, file = "2ndor3rdCrimePlot2.html")
+
+## Summary Stats
+prop.table(table(crime$`Crm Cd 1`, useNA = "ifany"))
+
+## Crm Cd 1: approx. 93%
+## Crm Cd 2:
+## Crm Cd 3:
+```
+
+```{r}
+## Ordinal 2
+
+crime_theft <- crime |>
+  filter(str_detect(`Crm Cd Desc`, pattern = "THEFT PLAIN") | str_detect(`Crm Cd Desc`, pattern = "THEFT-GRAND"))
+
+crime_theft$`Crm Cd Desc` <- recode(crime_theft$`Crm Cd Desc`, "THEFT-GRAND ($950.01 & OVER)EXCPT,GUNS,FOWL,LIVESTK,PROD" = "Grand Theft ($950.01 & OVER)", "THEFT PLAIN - PETTY ($950 & UNDER)" = "Plain Theft ($950 & UNDER)", "THEFT PLAIN - ATTEMPT" = "Plain Theft (Attempt)")
+#except, guns,fowls,livestock,produce
+
+plot5 <- ggplot(crime_theft,
+      aes(x= `Crm Cd Desc`)) +
+       geom_bar( fill="black") +
+  labs(x = "Type of Theft", y = "Number of Crime Reports", title = "Type of Theft by Number of Crime Reports") +
+  scale_y_continuous(labels = label_comma()) +
+  theme_minimal() +
+  coord_flip()
+
+plot5html <- ggplotly(plot5)
+
+saveWidget(plot5html, file = "TheftTypesPlot2.html")
+
+## Summary Stats
+prop.table(table(crime_theft$`Crm Cd Desc`, useNA = "ifany"))
+
+## Grand Theft ($950.01 & OVER) 0.39343400 or 39%
+## Plain Theft ($950 & UNDER) 0.60127156 or 60%
+## Plain Theft (Attempt) 0.00529444 or 1%
+```
+
+```{r}
+## Multivariable graph: BioSex and age
+## Graph of Victim's biosex and age 
+
+crime_age_biosex <- crime |>
+  filter(`Vict Age` > 0) |>
+  filter(`Vict Sex` == "F" |
+         `Vict Sex` == "M" |
+         `Vict Sex` == "X")
+
+crime_age_biosex$`Vict Sex` <- recode(crime_age_biosex$`Vict Sex`, F = "Female", M = "Male", X = "Unknown")
+
+count(crime_age_biosex, `Vict Sex`)
+# Female    354689
+# Male      370293
+# Unknown   10506
+
+plot9 <- ggplot(crime_age_biosex,
+       aes(y=`Vict Age`, x = `Vict Sex`)) +
+       geom_boxplot() +
+  labs(x="Victim's Sex", y = "Victim's Age", title = "Victim's Age by Victim's Biological Sex") +
+  theme_minimal()
+
+plot9html <- ggplotly(plot9)
+
+saveWidget(plot9html, file = "VictAgeVictSexPlot1.html")
+```
+
+```{r}
+## Multivariable graph: BioSex and Theft
+## Graph of Number of Thefts Reported by Victim's Biological Sex
+
+crime_theft2 <- crime_theft |>
+  filter(`Vict Sex` == "F" |
+         `Vict Sex` == "M" |
+         `Vict Sex` == "X")
+
+crime_theft2$`Vict Sex` <- recode(crime_theft2$`Vict Sex`, F = "Female", M = "Male", X = "Unknown")
+
+crime_theft2$`Crm Cd Desc` <- recode(crime_theft2$`Crm Cd Desc`,`THEFT PLAIN - ATTEMPT` = "Petty Theft (attempt)", `THEFT PLAIN - PETTY ($950 & UNDER)` = "Petty Theft", `THEFT-GRAND ($950.01 & OVER)EXCPT,GUNS,FOWL,LIVESTK,PROD` = "Grand Theft")
+
+plot6 <- ggplot(crime_theft2,
+       aes(x = `Crm Cd Desc`, y = `Vict Sex`)) +
+  geom_count(aes(color = after_stat(n), size = after_stat(n))) +
+  scale_size_area(
+    max_size = 30,
+    limits = c(0, 25000),
+    breaks = c(5000, 10000, 15000, 20000, 25000)
+  ) +
+  guides(color = 'legend') +
+  scale_color_gradient(
+    low = "orange", high = "blue",
+    limits = c(0, 25000),
+    breaks = c(5000, 10000, 15000, 20000, 25000)
+  ) +
+  labs(x = "Theft Type", y = "Victim's Sex", 
+       title = "Number of Thefts Reported by Victim's Biological Sex", 
+       color = "Count", size = "Count") +
+  theme_minimal()
+
+plot6 <- plot6 + guides(color = guide_colorbar())
+plot6html <- ggplotly(plot6)
+
+saveWidget(plot6html, file = "TheftByVictSexPlot1.html")
+```
+
+```{r}
+## Multivariable graph: BioSex and Time
+## Graph of time of crime and biosex
+
+crime_age_biosex$`TIME OCC` <- as.numeric(as.character(crime_age_biosex$`TIME OCC`))
+
+plot7 <- ggplot(crime_age_biosex,
+       aes(y=`TIME OCC`, x = `Vict Sex`)) +
+       geom_boxplot() +
+  labs(x="Victim's Sex", y = "Time of Occurrence", title = "Time of Occurrence by Victim's Biological Sex") +
+  theme_minimal()
+
+
+plot7html <- ggplotly(plot7)
+
+saveWidget(plot7html, file = "TimeOccVictSexPlot1.html")
+```
