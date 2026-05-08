@@ -16,43 +16,47 @@
     <div id="intro">
         <h2 class="important">Introduction to Data Set</h2>
             <p>In this article, we will be using a data set provided by the Los Angeles Police Department (LAPD). The dataset
-            includes crime incidents in Los Angeles starting in the year 2020. The data collection ends at approximately March
+            includes crime reports in Los Angeles starting in the year 2020. The data collection ends at approximately March
             7th, 2024 when the LAPD transitions to a new records management system compliant with FBI standards. Some notable
             variables that will be used in our analysis include victim's biological sex, victim's age, area of crime, crimes
-            involving theft, number of crimes reported, and time the crime occurred. Overall the dataset includes a little over
+            involving theft, and time the crime occurred. Additionally, unit of observation is crime reports. Overall the dataset includes a little over
             1,000,000 crime reports. It is important to note that the data set is comes from data that is originally handwritten
             by the police officers who are taking the crime report. This makes the data susceptible to bias in the reporting by
             the police officers themselves and potential errors from the transition of the handwritten data to computerized
             dataset. If you want to use this data set or simply learn more then go to the
             <a href="https://data.lacity.org/Public-Safety/Crime-Data-from-2020-to-Present/2nrs-mtv8/about_data">Los Angeles
-             Open Data Website.</a></p>
-            <button onclick="viewOn()">Click to view screenshot description from site</button>
-            <img id="myImage" src=" " style="width:600px">
-            <button onclick="viewOff()">Click to remove screenshot description from site</button>
+             Open Data Website.</a> You can view a quick screenshot by using the button below!</p>
+            <button id="button" onclick="viewOn()">View</button>
+            <img id="myImage" src="ScreeshotLAPD.png" style="display:none;">
     </div>
 
     <div id="body1">
         <h2 class="important">Exploratory Data Analysis</h2>
         <p>To access the conducted data analysis consult my
             <a href="https://github.com/loreleibarnum/LoreleiBarnum-SDS-CSC-235-hw02">GitHub</a> page. Additionally,
-        All plots are interactable, simply hover over part of the plot you would like to see more statistical information
-        on. For example, if you hover over a bar on the bar plot you will be given the exact number of crime reports.</p>
-            <h3 class="important">Victim's Biological Sex</h3>
+            All plots are interactable, simply hover over part of the plot you would like to see more statistical information
+            on. For example, if you hover over a bar on the bar plot you will be given the exact number of crime reports.</p>
+
+            <h3 class="important">Victim's Biological Sex (Nominal Variable)</h3>
+            <p>Summary Statistics:</p>
+            <ul>Proportion:<li>Female - 0.4168410</li> <li>Male - 0.4695001</li> <li>Unknown - 0.1136589</li></ul>
+            <ul>Percentage (Rounded):<li>Female - 42%</li> <li>Male - 47%</li> <li>Unknown - 11%</li></ul>
+            <p>Frequency: Female - 358,580, Male - 403,879, Unknown - 97,773</p>
             <p>This dataset has three categories for the biological sex of the victims: female, male, and unknown.
             Female sex accounts for approximately 42% of the data set, the male sex approximately 47%, and the unknown sex
             approximately 11%. This suggests that men are more likely to be victims of crime. We can see this visualized
             below in the bar graph the shows the count by gender, rather than the percentage. </p>
-            <iframe src="HW2Plots/VictimBioSexBarPlot1.html" width="700" height="500" title="Victioms's Biological Sex"></iframe>
+            <img src="HW2_files/CrimebySex.png" width="400" height="500" alt="Crime by Sex">
 
             <h3 class="important">Area of Crime</h3>
-                <p> The data set has categorize 21 different areas of Los Angeles where crime has occurred. These areas and
-                their percentage of the data set are recorded as following: 77th Street 6%, Central 7%, Devonshire 4%, Foothill 3%, Harbor 4%
-                Hollenbeck 4%, Hollywood 5%, Mission 4%, North Hollywood 5%, Newton 5%, Northeast 4%, Olympic 5%, Pacific 6%,
-                Rampart 5%, Southeast 5%, Southwest 6%, Topanga 4%, Van Nuys 4%, West LA 5%, West Valley 4%, and Wilshire 5%.
-                Below is a graph that shows the number of crime reports by area. the Central area of Los Angeles has the
-                highest percentage of 7% with 69,670 crime reports. You can consult the graph to see the exact number of
-                crime reports by area.</p>
-                <iframe src="HW2Plots/AreaOfCrimeBarPlot1.html" width="700" height="500" title="Victioms's Biological Sex"></iframe>
+            <p> The data set has categorize 21 different areas of Los Angeles where crime has occurred. These areas and
+            their percentage of the data set are recorded as following: 77th Street 6%, Central 7%, Devonshire 4%, Foothill 3%, Harbor 4%
+            Hollenbeck 4%, Hollywood 5%, Mission 4%, North Hollywood 5%, Newton 5%, Northeast 4%, Olympic 5%, Pacific 6%,
+            Rampart 5%, Southeast 5%, Southwest 6%, Topanga 4%, Van Nuys 4%, West LA 5%, West Valley 4%, and Wilshire 5%.
+            Below is a graph that shows the number of crime reports by area. the Central area of Los Angeles has the
+            highest percentage of 7% with 69,670 crime reports. You can consult the graph to see the exact number of
+            crime reports by area.</p>
+            <img src="HW2_files/CrimebyArea.png" width="500" height="500" alt="Crime by Area">
 
             <h3 class="important">Victim's Age</h3>
             <p> Within the dataset, the average victim's age is 39.51 years old with a median of 37 years old. It has
@@ -61,13 +65,13 @@
             one person in documented history to reach 120 we will remove this observation. The density plot shows the
             distrbution of total crime reports in the data set across the ages. In the plot, there is a peak at
             approximately the age 30, suggesting that is the age someone is most likely to be a victim of a crime.</p>
-            <iframe src="HW2Plots/VictimsAgeDensityPlot1.html" width="700" height="500" title="Victioms's Age"></iframe>
+            <img src="HW2_files/CrimebyAge.png" width="500" height="500" alt="Crime by Age">
 
             <h3 class="important">Time of Occurrence</h3>
             <p>The average time of occurence of a crime is 1:40PM with a median of 2:20PM. This suggests that a
             a large amount of crime takes place mid day during daylight. To read the plot below, time is in military time
             without a colon. The time that has the most crime reports is 12:00PM.</p>
-            <iframe src="HW2Plots/TimeofCrimePlot1.html" width="700" height="500" title="Time of Occurrence"></iframe>
+            <img src="HW2_files/Rplot.png" width="700" height="450" alt="Crime by Time">
 
             <h3 class="important">The Number of Crimes in a Report</h3>
             <p>In the crime reports, they have a process of listing the number of crimes in one report, often with the
@@ -76,7 +80,7 @@
             our plot. Since all crime reports have a primary crime, the category of crime committed 1 consists of every
             observation in the data set. Out of ~1,000,000 reports, only ~70,000 have a secondary crime, and only
             ~2,300 have a third crime.</p>
-            <iframe src="HW2Plots/2ndor3rdCrimePlot2.html" width="750" height="500" title="Time of Occurrence"></iframe>
+            <img src="HW2_files/Crimeby1st2nd3rdCrime.png" width="600" height="550" alt="Crime by Number of Crimes">
 
             <h3 class="important">Types of Theft</h3>
             <p>For the purpose of our analysis, we will focus on three types of theft crime reports: grand theft of
@@ -84,17 +88,11 @@
             theft. When the data is filtered down to only these three categories, grand theft account for
             approximately 39%, plain theft approximately 60%, and attempted plain theft approximately 1 percent. We
             can see this visualized in the graph.</p>
-            <iframe src="HW2Plots/TheftTypesPlot2.html" width="700" height="500" title="Time of Occurrence"></iframe>
+            <img src="HW2_files/CrimebyTheftType.png" width="600" height="550" alt="Crime by Theft Type">
     </div>
 
     <div id="body2">
         <h2>Multivariable Analysis</h2>
-        <p> Our following multivariable analaysis tests the following three hypothesis: </p>
-        <p>1. Victim's biological sex will have an effect on theft types established in our single variable analysis in
-        above section. </p>
-        <p>2. Victim's biological sex will have a correlation with time of crime occurrence.</p>
-        <p>3. Victim's biological sex will have a correlation with victim's age.</p>
-
             <h3>Number of Thefts Reported by Category by Victim's Biological Sex</h3>
             <p>In this plot where orange plus small circle is a lower number of theft reports by sex and blue plus large
             circle the higher number. We are able to effectively visualize what types of thefts and which sexes are more
@@ -104,19 +102,27 @@
             are highly underrepresented in the data set, and we cannot be exactly sure who exactly is being put into this
             category as it is not elaborated upon by the LAPD. Additionally, we cannot be sure if the LAPD officers are
             conflating gender and sex when making these reports.</p>
-            <iframe src="HW2Plots/TheftByVictSexPlot1.html" width="750" height="500" title="Time of Occurrence"></iframe>
+            <img src="HW2_files/SexbyTheft.png" width="850" height="600" alt="Sex by Theft">
 
             <h3>Time of Occurrence by Victim's Biological Sex</h3>
             <p>This boxplot showing time of occurrence by victim's sex shows little difference across the sexes. The medians
             are only marginally different for the female, male, and unknown sex at 2:00PM, 2:15PM, and 2:30PM respectively.</p>
-            <iframe src="HW2Plots/TimeOccVictSexPlot1.html" width="700" height="500" title="Time of Occurrence"></iframe>
+            <img src="HW2_files/TimeSex.png" width="700" height="550" title="Time of Occurrence by Sex">
 
             <h3>Victim's Age by Victim's Biological Sex</h3>
             <p>This boxplot showing victim's age by victim's biological sex similar to the above plot shows little diffence
             between the female and male sex, with a female victim more likely to be a few years younger than their male
             counterpart. However, the unknown sex is much younger with a median victim age of 22, 16 years younger than
             median age for the a victim.</p>
-            <iframe src="HW2Plots/VictAgeVictSexPlot1.html" width="700" height="500" title="Time of Occurrence"></iframe>
+            <img src="HW2_files/AgebySex.png" width="750" height="550" alt="Crime by Time">
+        <h2>Potential Hypothesis</h2>
+        <p> The multivariable graphs above suggest that there is a potential relationship between certain variables. To test
+        this, we would have to use statistical methods such as linear regression, ANOVA, etc., but for now here are three
+        potential hypothesis that could by investigated.</p>
+        <p>1. Victim's biological sex will have an effect on theft types established in our single variable analysis in
+        above section. </p>
+        <p>2. Victim's biological sex will have a correlation with time of crime occurrence.</p>
+        <p>3. Victim's biological sex will have a correlation with victim's age.</p>
     </div>
 
 </body>

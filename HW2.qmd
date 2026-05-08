@@ -13,7 +13,7 @@ library(plotly)
 library(htmlwidgets)
 ## How to Save Widget: https://www.rdocumentation.org/packages/htmlwidgets/versions/1.6.4/topics/saveWidget
 library(scales)
-crime <- read_csv("~/Documents/SDS 235/Crime_Data_from_2020_to_Present.csv")
+crime <- read_csv("~/Documents/SDS235/Crime_Data_from_2020_to_Present.csv")
 ## Data: Crime Data from 2020 to Present Public Safety [https://data.lacity.org/Public-Safety/Crime-Data-from-2020-to-Present/2nrs-mtv8/about_data]
 ```
 
@@ -33,16 +33,23 @@ plot1 <- ggplot(crime_biosex,
   labs(x = "Victim's Sex", y = "Number of Crime Reports", title = "Number of Crime Reports by Victim's Sex") +
   scale_y_continuous(labels = label_comma()) + ## This makes label not scientific notation
   theme_minimal()
+plot1
+#plot1html <- ggplotly(plot1)
 
-plot1html <- ggplotly(plot1)
-
-saveWidget(plot1html, file = "VictimBioSexBarPlot1.html")
+#saveWidget(plot1html, file = "VictimBioSexBarPlot1.html")
+ggsave("VictimBioSexBarPlot1.png", width = 40, height = 30, dpi = 30)
 
 ## Summary Stats
 prop.table(table(crime_biosex$`Vict Sex`, useNA = "ifany"))
+table(crime_biosex$`Vict Sex`)
+   
     ## Female: 0.4168410    approx 42% Female
     ## Male: 0.4695001      approx 47% Male
     ## Unknown: 0.1136589   approx 11% Unknown
+
+    ## Female: 358580  
+    ## Male:   403879   
+    ## Unknown: 97773
 ```
 
 ```{r}
@@ -62,6 +69,7 @@ saveWidget(plot2html, file = "AreaOfCrimeBarPlot1.html")
 
 ## Summary Stats
 prop.table(table(crime$`AREA NAME`, useNA = "ifany"))
+table(crime$`AREA NAME`, useNA = "ifany")
     ## 77th Street: 0.06145130    approx 6% 77th St
     ## Central: 0.06932400        approx 7% Central
     ## etc.
@@ -106,7 +114,7 @@ plot8 <- ggplot(crime,
         geom_histogram(binwidth = 100, fill = "black", color = "pink") +
    labs(x="Time of Occurrence", y = "Number of Crime Reports", title = "Number of Crime Reports by Time of Occurrence") +
    theme_minimal()
-
+plot8
 plot8html <- ggplotly(plot8)
 
 saveWidget(plot8html, file = "TimeofCrimePlot1.html")
@@ -223,9 +231,7 @@ crime_theft2 <- crime_theft |>
   filter(`Vict Sex` == "F" |
          `Vict Sex` == "M" |
          `Vict Sex` == "X")
-
 crime_theft2$`Vict Sex` <- recode(crime_theft2$`Vict Sex`, F = "Female", M = "Male", X = "Unknown")
-
 crime_theft2$`Crm Cd Desc` <- recode(crime_theft2$`Crm Cd Desc`,`THEFT PLAIN - ATTEMPT` = "Petty Theft (attempt)", `THEFT PLAIN - PETTY ($950 & UNDER)` = "Petty Theft", `THEFT-GRAND ($950.01 & OVER)EXCPT,GUNS,FOWL,LIVESTK,PROD` = "Grand Theft")
 
 plot6 <- ggplot(crime_theft2,
@@ -236,18 +242,20 @@ plot6 <- ggplot(crime_theft2,
     limits = c(0, 25000),
     breaks = c(5000, 10000, 15000, 20000, 25000)
   ) +
-  guides(color = 'legend') +
   scale_color_gradient(
     low = "orange", high = "blue",
     limits = c(0, 25000),
     breaks = c(5000, 10000, 15000, 20000, 25000)
   ) +
+  guides(
+  color = guide_legend(title = "Count"),
+  size = guide_legend(title = "Count")
+) +
   labs(x = "Theft Type", y = "Victim's Sex", 
-       title = "Number of Thefts Reported by Victim's Biological Sex", 
-       color = "Count", size = "Count") +
+       title = "Number of Thefts Reported by Victim's Biological Sex") +
   theme_minimal()
 
-plot6 <- plot6 + guides(color = guide_colorbar())
+plot6
 plot6html <- ggplotly(plot6)
 
 saveWidget(plot6html, file = "TheftByVictSexPlot1.html")
